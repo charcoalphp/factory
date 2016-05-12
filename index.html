@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Charcoal-factory by locomotivemtl</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Charcoal-factory</h1>
+      <h2 class="project-tagline">Dynamic object creation (Factory/ AbstractFactory / Builder / Class Resolver)</h2>
+      <a href="https://github.com/locomotivemtl/charcoal-factory" class="btn">View on GitHub</a>
+      <a href="https://github.com/locomotivemtl/charcoal-factory/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/locomotivemtl/charcoal-factory/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="charcoal-factory" class="anchor" href="#charcoal-factory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Charcoal Factory</h1>
+
+<p>Factories create or build dynamic PHP objects.</p>
+
+<p><a href="https://travis-ci.org/locomotivemtl/charcoal-factory"><img src="https://travis-ci.org/locomotivemtl/charcoal-factory.svg?branch=master" alt="Build Status"></a></p>
+
+<h1>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Table of contents</h1>
+
+<ul>
+<li>How to install
+
+<ul>
+<li>Dependencies</li>
+</ul>
+</li>
+<li>Factories
+
+<ul>
+<li>About factories</li>
+<li>Ensuring a type of object</li>
+<li>Setting a default type of object</li>
+<li>Constructor arguments</li>
+<li>Executing an object callback</li>
+</ul>
+</li>
+</ul>
+
+<h1>
+<a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to install</h1>
+
+<p>The preferred (and only supported) way of installing <em>charcoal-factory</em> is with <strong>composer</strong>:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ composer require locomotivemtl/charcoal-factory</pre></div>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<ul>
+<li>
+<a href="http://php.net"><code>PHP 5.5+</code></a>
+
+<ul>
+<li>Older versions of PHP are deprecated, therefore not supported for charcoal-factory.</li>
+</ul>
+</li>
+</ul>
+
+<blockquote>
+<p><g-emoji alias="point_right" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f449.png">👉</g-emoji> Development dependencies, which are optional when using charcoal-factory, are described in the <a href="#development">Development</a> section of this README file.</p>
+</blockquote>
+
+<h1>
+<a id="factories" class="anchor" href="#factories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Factories</h1>
+
+<h2>
+<a id="about-factories" class="anchor" href="#about-factories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About factories</h2>
+
+<p>Factories have only one purpose: to create / instanciate new PHP objects. There is 2 different methods of object creation:</p>
+
+<ul>
+<li>Typically, the <code>create</code> method instantiates an object, from a class ident.</li>
+<li>Additionnally, the <code>get</code> method can be called to retrieve the last created instance.</li>
+</ul>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$factory</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Charcoal\Factory\</span><span class="pl-c1">ResolverFactory</span>();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Ensure the created object is a Charcoal Model</span></span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>setBaseClass(<span class="pl-s"><span class="pl-pds">'</span>\Charcoal\Model\ModelInterface<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Create a "news" object (from the `charcoal-cms` module)</span></span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>create(<span class="pl-s"><span class="pl-pds">'</span>charcoal/cms/news<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>There are 3 default type of factory provided:</p>
+
+<h3>
+<a id="genericfactory" class="anchor" href="#genericfactory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GenericFactory</code>
+</h3>
+
+<p>Resolve the <strong>class name</strong> by using the requested <strong>type</strong> directly as the class name.</p>
+
+<h3>
+<a id="mapfactory" class="anchor" href="#mapfactory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>MapFactory</code>
+</h3>
+
+<p>Resolve the <strong>class name</strong> from an associative array (<em>map</em>) with the requested <strong>type</strong> as key.</p>
+
+<h3>
+<a id="resolverfactory" class="anchor" href="#resolverfactory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>ResolverFactory</code>
+</h3>
+
+<p>Resolves the <strong>class name</strong> from the <code>resolve()</code> method, which typically transform the requested <strong>type</strong> by:</p>
+
+<h2>
+<a id="ensuring-a-type-of-object" class="anchor" href="#ensuring-a-type-of-object" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ensuring a type of object</h2>
+
+<p>Ensuring a type of object can be done by setting the <code>baseClass</code>, either forced in a class:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">MyFactory</span> <span class="pl-k">extends</span> <span class="pl-e">AbstractFactory</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">baseClass</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>\My\Foo\BaseClassInterface`;</span></span>
+<span class="pl-s1"><span class="pl-s">    }</span></span>
+<span class="pl-s1"><span class="pl-s">}</span></span></pre></div>
+
+<p>Or, dynamically, with <code>setBaseClass()</code>:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$factory</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">ResolverFactory</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>setBaseClass(<span class="pl-s"><span class="pl-pds">'</span>\My\Foo\BaseClassInterface<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<blockquote>
+<p><g-emoji alias="point_right" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f449.png">👉</g-emoji> Note that <em>Interfaces</em> can also be used as a factory's base class.</p>
+</blockquote>
+
+<h2>
+<a id="setting-a-default-type-of-object" class="anchor" href="#setting-a-default-type-of-object" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setting a default type of object</h2>
+
+<p>It is possible to set a default type of object (default class) by setting the <code>defaultClass</code>, either forced in a class:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">MyFactory</span> <span class="pl-k">extends</span> <span class="pl-e">AbstractFactory</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">defaultClass</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>\My\Foo\DefaultClassInterface`;</span></span>
+<span class="pl-s1"><span class="pl-s">    }</span></span>
+<span class="pl-s1"><span class="pl-s">}</span></span></pre></div>
+
+<p>Or, dynamically, with <code>setDefaultClass()</code>:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$factory</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">ResolverFactory</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>setDefaultClass(<span class="pl-s"><span class="pl-pds">'</span>\My\Foo\DefaultClassInterface<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<blockquote>
+<p>⚠ Setting a default class name changes the standard Factory behavior. When an invalid class name is used, instead of throwing an <code>Exception</code>, an object of the default class type will <strong>always</strong> be returned.</p>
+</blockquote>
+
+<h2>
+<a id="constructor-arguments" class="anchor" href="#constructor-arguments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Constructor arguments</h2>
+
+<p>It is possible to set "automatic" constructor arguments that will be passed to every created object.</p>
+
+<p>The easiest way to achieve this is by passing the arguments as the 2nd parameter of a factory's <code>create()</code> method.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>create(<span class="pl-s"><span class="pl-pds">'</span>foo/bar<span class="pl-pds">'</span></span>, [<span class="pl-smi">$args</span>]);</span></pre></div>
+
+<p>Another way of providing constructor arguments to a factory is with the <code>setArguments()</code> method. Assume that the <code>\Foo\Bar</code> object have the following constructor:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">\Foo</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Bar</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">__constructor</span>(<span class="pl-smi">$dependencies</span>)</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>setFooDependency(<span class="pl-smi">$dependencies</span>[<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>setBar(<span class="pl-smi">$dependencies</span>[<span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>Then the following code will create an object with proper constructor arguments.</p>
+
+<pre><code>$factory = new \Charcoal\Factory\MapFactory();
+$factory-&gt;setMap([
+    'obj' =&gt; '\Foo\Bar'
+]);
+$factory-&gt;setArguments([
+    'foo'=&gt;new Dependency1(),
+    'bar'=&gt;new Dependency2()
+]);
+$obj = $factory-&gt;create('obj');
+</code></pre>
+
+<h2>
+<a id="executing-an-object-callback" class="anchor" href="#executing-an-object-callback" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Executing an object callback</h2>
+
+<p>It is possible to execute an object callback upon object instanciation by passing a <code>callable</code> object as the 3rd argument of the <code>create()</code> method. The callback should have the following signature:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c">// $obj is the newly created object</span></span>
+<span class="pl-s1"><span class="pl-k">function</span> <span class="pl-en">callback</span>(<span class="pl-smi">$obj</span>);</span></pre></div>
+
+<p>Example:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$factory</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GenericFactory</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>setBaseClass(<span class="pl-s"><span class="pl-pds">'</span>\Foo\BarInterface<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>setArguments([</span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>logger<span class="pl-pds">'</span></span><span class="pl-k">=&gt;</span><span class="pl-smi">$container</span>[<span class="pl-s"><span class="pl-pds">'</span>logger<span class="pl-pds">'</span></span>]</span>
+<span class="pl-s1">]);</span>
+<span class="pl-s1"><span class="pl-c">// Create a new object with a callback.</span></span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>create(<span class="pl-s"><span class="pl-pds">'</span>\Foo\Bar<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-k">function</span>(<span class="pl-c1">\Foo\</span><span class="pl-c1">Bar</span> <span class="pl-smi">$obj</span>) {</span>
+<span class="pl-s1">  <span class="pl-c">// Outputs the newly created `\Foo\Bar` object</span></span>
+<span class="pl-s1">    <span class="pl-c1">var_dump</span>(<span class="pl-smi">$obj</span>);</span>
+<span class="pl-s1">});</span></pre></div>
+
+<p>Another way of providing a callback is with the <code>setCallback()</code> method:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$factory</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GenericFactory</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>setCallback(<span class="pl-k">function</span>(<span class="pl-c1">\Foo\</span><span class="pl-c1">Bar</span> <span class="pl-smi">$obj</span>) {</span>
+<span class="pl-s1">    <span class="pl-c">// Outputs the newly created '\Foo\Bar' object</span></span>
+<span class="pl-s1">    <span class="pl-c1">var_dump</span>(<span class="pl-smi">$obj</span>);</span>
+<span class="pl-s1">});</span></pre></div>
+
+<h1>
+<a id="the-abstractfactory-api" class="anchor" href="#the-abstractfactory-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The <code>AbstractFactory</code> API</h1>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Return value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create(string $type [, array $args, callable $cb])</code></td>
+<td><em>Object</em></td>
+<td>Create a class from a "type" string.</td>
+</tr>
+<tr>
+<td><code>get(string $type [, array $args])</code></td>
+<td><em>Object</em></td>
+<td>Get returns the latest created class instance, or a new one if none exists.</td>
+</tr>
+<tr>
+<td><code>setBase_class(string $classname)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>baseClass()</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>setDefaultClass(string $classname)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>defaultClass()</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>resolve(string $type)</code></td>
+<td><code>string</code></td>
+<td>
+<strong>abstract</strong>, must be reimplemented in children classes.</td>
+</tr>
+<tr>
+<td><code>isResolvable(string $type)</code></td>
+<td><code>boolean</code></td>
+<td>
+<strong>abstract</strong>, must be reimplemented in children classes.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="the-mapfactory-additional-api" class="anchor" href="#the-mapfactory-additional-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The <code>MapFactory</code> additional API</h2>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Return value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>addClass(string $type, string $class_name)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>setMap(array $map)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>map()</code></td>
+<td><code>array</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="the-genericfactory-additional-api" class="anchor" href="#the-genericfactory-additional-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The <code>GenericFactory</code> additional API</h2>
+
+<p>Because the <code>ClassNameFactory</code> uses the parameter directly, there is no additional methods for this type of class.</p>
+
+<p>The <code>resolve()</code> method simply returns its <em>type</em> argument, and the <code>validate()</code> method simply ensures its <em>type</em> argument is a valid (existing) class.</p>
+
+<h2>
+<a id="the-resolverfactory-additional-api" class="anchor" href="#the-resolverfactory-additional-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The <code>ResolverFactory</code> additional API</h2>
+
+<p>The <code>ResolverFactory</code> resolves the classname from the class resolver options:</p>
+
+<ul>
+<li>
+<code>resolverPrefix</code> <code>string</code> that will be prepended to the resolved class name.</li>
+<li>
+<code>resolverSuffix</code> <code>string</code> that will be appended to the resolved class name.</li>
+<li>
+<code>resolverCapitals</code> <code>array</code> of characters that will cause the next character to be capitalized.</li>
+<li>
+<code>resolverReplacements</code> <code>array</code>
+</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Return value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setResolverPrefix(string $prefix)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>resolverPrefix()</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>setResolverSuffix(string $suffix)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>resolverSuffix()</code></td>
+<td><code>string</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>setResolveCcapitals(array $capitals)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>resolverCapitals()</code></td>
+<td><code>array</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>setResolverReplacements(array $replacements)</code></td>
+<td><em>Chainable</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>resolverReplacements()</code></td>
+<td><code>array</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h1>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h1>
+
+<p>To install the development environment:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install
+$ composer install</pre></div>
+
+<h2>
+<a id="development-dependencies" class="anchor" href="#development-dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development dependencies</h2>
+
+<ul>
+<li><code>npm</code></li>
+<li>
+<code>grunt</code> (install with <code>npm install grunt-cli</code>)</li>
+<li><code>composer</code></li>
+<li><code>phpunit</code></li>
+</ul>
+
+<h2>
+<a id="coding-style" class="anchor" href="#coding-style" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Coding Style</h2>
+
+<p>All Charcoal modules follow the same coding style and <code>charcoal-factory</code> is no exception. For PHP:</p>
+
+<ul>
+<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md"><em>PSR-1</em></a></li>
+<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md"><em>PSR-2</em></a></li>
+<li>
+<a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md"><em>PSR-4</em></a>, autoloading is therefore provided by <em>Composer</em>
+</li>
+<li>
+<a href="http://phpdoc.org/"><em>phpDocumentor</em></a>
+
+<ul>
+<li>Add DocBlocks for all classes, methods, and functions;</li>
+</ul>
+</li>
+<li>Naming conventions
+
+<ul>
+<li>Prefix abstract classes with <code>Abstract</code>;</li>
+<li>Suffix interfaces with <code>Interface</code>, traits with <code>Trait</code>, exceptions with <code>Exception</code>;</li>
+<li>For arrays, use short notation <code>[]</code> (instead of <code>array()</code>).</li>
+<li>Read the <a href="phpcs.xml">phpcs.xml</a> file for all the details.</li>
+</ul>
+</li>
+</ul>
+
+<p>Coding styles are  enforced with <code>grunt phpcs</code> (<a href="https://github.com/squizlabs/PHP_CodeSniffer"><em>PHP Code Sniffer</em></a>). The actual ruleset can be found in <code>phpcs.xml</code>.</p>
+
+<blockquote>
+<p><g-emoji alias="point_right" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f449.png">👉</g-emoji> To fix minor coding style problems, run <code>grunt phpcbf</code> (<a href="https://github.com/squizlabs/PHP_CodeSniffer"><em>PHP Code Beautifier and Fixer</em></a>). This tool uses the same ruleset as <em>phpcs</em> to automatically correct coding standard violations.</p>
+</blockquote>
+
+<h2>
+<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors</h2>
+
+<ul>
+<li>Mathieu Ducharme <a href="mailto:mat@locomotive.ca">mat@locomotive.ca</a>
+</li>
+</ul>
+
+<h2>
+<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changelog</h2>
+
+<h3>
+<a id="03" class="anchor" href="#03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.3</h3>
+
+<ul>
+<li>Add the <code>setArguments()</code> method to factories.</li>
+<li>Add the <code>setCallback()</code> method to factories.</li>
+<li>Execute the callback when using the default class too.</li>
+</ul>
+
+<h3>
+<a id="02" class="anchor" href="#02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.2</h3>
+
+<p><em>Released 2016-01-26</em></p>
+
+<p>Minor (but BC-breaking) changes to Charcoal-Factory</p>
+
+<ul>
+<li>Full PSR1 compliancy (All methods are now camel-case).</li>
+<li>Add a callback argument to the <code>create()</code> method.</li>
+<li>
+<code>create()</code> and <code>get()</code> are now <code>final</code> in the base abstract factory class.</li>
+<li>Internal code, docs and tool improvements.</li>
+</ul>
+
+<h3>
+<a id="01" class="anchor" href="#01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.1</h3>
+
+<p><em>Released 2015-11-25</em></p>
+
+<ul>
+<li>Initial release</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/locomotivemtl/charcoal-factory">Charcoal-factory</a> is maintained by <a href="https://github.com/locomotivemtl">locomotivemtl</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
