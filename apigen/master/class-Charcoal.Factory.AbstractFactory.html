@@ -121,7 +121,7 @@
 		<b>Namespace:</b> <a href="namespace-Charcoal.html">Charcoal</a>\<a href="namespace-Charcoal.Factory.html">Factory</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-Charcoal.Factory.AbstractFactory.html#12-347" title="Go to source code">Charcoal/Factory/AbstractFactory.php</a>
+			<b>Located at</b> <a href="source-class-Charcoal.Factory.AbstractFactory.html#12-350" title="Go to source code">Charcoal/Factory/AbstractFactory.php</a>
 		<br>
 	</div>
 
@@ -226,14 +226,14 @@ The callable should have a signature: <code>function($obj);</code> where $obj is
 		<td class="attributes"><code>
 			 public 
 
-			
+			mixed
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_createClass">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#156-186" title="Go to source code">createClass</a>( <span> <var>$classname</var></span>, <span> <var>$args</var></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#156-189" title="Go to source code">createClass</a>( <span>string <var>$classname</var></span>, <span>mixed <var>$args</var></span> )</code>
 
 		<div class="description short">
 			<p>Create a class instance with given arguments.</p>
@@ -252,7 +252,18 @@ The callable should have a signature: <code>function($obj);</code> where $obj is
 </ul>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$classname</var></dt>
+					<dd>The FQN of the class to instanciate.</dd>
+					<dt><var>$args</var></dt>
+					<dd>The constructor arguments.</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>The created object.
+				</div>
 
 
 
@@ -272,7 +283,7 @@ The callable should have a signature: <code>function($obj);</code> where $obj is
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#188-210" title="Go to source code">get</a>( <span>string <var>$type</var></span>, <span>array <var>$args</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#191-213" title="Go to source code">get</a>( <span>string <var>$type</var></span>, <span>array <var>$args</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Get (load or create) an instance of a class, by type.</p>
@@ -322,7 +333,7 @@ an already created object of this type, from memory.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setBaseClass">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#212-245" title="Go to source code">setBaseClass</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#215-248" title="Go to source code">setBaseClass</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>If a base class is set, then it must be ensured that the created objects
@@ -369,7 +380,7 @@ are <code>instanceof</code> this base class.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_baseClass">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#247-253" title="Go to source code">baseClass</a>( )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#250-256" title="Go to source code">baseClass</a>( )</code>
 
 		<div class="description short">
 			
@@ -405,7 +416,7 @@ are <code>instanceof</code> this base class.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setDefaultClass">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#255-286" title="Go to source code">setDefaultClass</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#258-289" title="Go to source code">setDefaultClass</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>If a default class is set, then calling <code>get()</code> or <code>create()</code> an invalid type
@@ -452,7 +463,7 @@ should return an object of this class instead of throwing an error.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_defaultClass">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#288-294" title="Go to source code">defaultClass</a>( )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#291-297" title="Go to source code">defaultClass</a>( )</code>
 
 		<div class="description short">
 			
@@ -488,7 +499,7 @@ should return an object of this class instead of throwing an error.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setArguments">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#296-304" title="Go to source code">setArguments</a>( <span>array <var>$arguments</var></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#299-307" title="Go to source code">setArguments</a>( <span>array <var>$arguments</var></span> )</code>
 
 		<div class="description short">
 			
@@ -529,7 +540,7 @@ should return an object of this class instead of throwing an error.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_arguments">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#306-312" title="Go to source code">arguments</a>( )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#309-315" title="Go to source code">arguments</a>( )</code>
 
 		<div class="description short">
 			
@@ -565,7 +576,7 @@ should return an object of this class instead of throwing an error.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setCallback">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#314-322" title="Go to source code">setCallback</a>( <span>callable <var>$callback</var></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#317-325" title="Go to source code">setCallback</a>( <span>callable <var>$callback</var></span> )</code>
 
 		<div class="description short">
 			
@@ -604,7 +615,7 @@ should return an object of this class instead of throwing an error.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_callback">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#324-330" title="Go to source code">callback</a>( )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#327-333" title="Go to source code">callback</a>( )</code>
 
 		<div class="description short">
 			
@@ -638,7 +649,7 @@ should return an object of this class instead of throwing an error.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_resolve">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#332-338" title="Go to source code">resolve</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#335-341" title="Go to source code">resolve</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Resolve the class name from "type".</p>
@@ -679,7 +690,7 @@ should return an object of this class instead of throwing an error.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isResolvable">#</a>
-		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#340-346" title="Go to source code">isResolvable</a>( <span>string <var>$type</var></span> )</code>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#343-349" title="Go to source code">isResolvable</a>( <span>string <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns wether a type is resolvable (is valid).</p>
