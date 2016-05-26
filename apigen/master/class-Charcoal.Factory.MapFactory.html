@@ -41,6 +41,7 @@
 			<ul>
 				<li><a href="class-Charcoal.Factory.AbstractFactory.html">AbstractFactory</a></li>
 				<li><a href="class-Charcoal.Factory.GenericFactory.html">GenericFactory</a></li>
+				<li><a href="class-Charcoal.Factory.GenericResolver.html">GenericResolver</a></li>
 				<li class="active"><a href="class-Charcoal.Factory.MapFactory.html">MapFactory</a></li>
 				<li><a href="class-Charcoal.Factory.ResolverFactory.html">ResolverFactory</a></li>
 			</ul>
@@ -122,267 +123,19 @@
 		<b>Namespace:</b> <a href="namespace-Charcoal.html">Charcoal</a>\<a href="namespace-Charcoal.Factory.html">Factory</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-Charcoal.Factory.MapFactory.html#11-137" title="Go to source code">Charcoal/Factory/MapFactory.php</a>
+			<b>Located at</b> <a href="source-class-Charcoal.Factory.MapFactory.html#11-18" title="Go to source code">Charcoal/Factory/MapFactory.php</a>
 		<br>
 	</div>
 
 
 
-	<table class="summary methods" id="methods">
-	<caption>Methods summary</caption>
-	<tr data-order="__construct" id="___construct">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-Charcoal.Factory.MapFactory.html#23-33" title="Go to source code">__construct</a>( <span>array <var>$data</var> = <span class="php-keyword1">null</span></span> )</code>
-
-		<div class="description short">
-			
-		</div>
-
-		<div class="description detailed hidden">
-			
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$data</var></dt>
-					<dd>Factory arguments.</dd>
-				</dl></div>
-
-
-
-
-				<h4>Overrides</h4>
-				<div class="list"><code><a href="class-Charcoal.Factory.AbstractFactory.html#___construct">Charcoal\Factory\AbstractFactory::__construct()</a></code></div>
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="addClass" id="_addClass">
-
-		<td class="attributes"><code>
-			 public 
-
-			<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code>
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_addClass">#</a>
-		<code><a href="source-class-Charcoal.Factory.MapFactory.html#35-58" title="Go to source code">addClass</a>( <span>string <var>$type</var></span>, <span>string <var>$className</var></span> )</code>
-
-		<div class="description short">
-			<p>Add a class name to the available types <em>map</em>.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Add a class name to the available types <em>map</em>.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>The type (class ident).</dd>
-					<dt><var>$className</var></dt>
-					<dd>The FQN of the class.</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code><br>Chainable
-				</div>
-
-				<h4>Throws</h4>
-				<div class="list">
-					InvalidArgumentException<br>If the $type parameter is not a striing or the $className class does not exist.
-				</div>
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="setMap" id="_setMap">
-
-		<td class="attributes"><code>
-			 public 
-
-			<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code>
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_setMap">#</a>
-		<code><a href="source-class-Charcoal.Factory.MapFactory.html#60-74" title="Go to source code">setMap</a>( <span>array <var>$map</var></span> )</code>
-
-		<div class="description short">
-			<p>Add multiple types, in a an array of <code>type</code> => <code>className</code>.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Add multiple types, in a an array of <code>type</code> => <code>className</code>.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$map</var></dt>
-					<dd>The map (key=>classname) to use.</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code><br>Chainable
-				</div>
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="map" id="_map">
-
-		<td class="attributes"><code>
-			 public 
-
-			array
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_map">#</a>
-		<code><a href="source-class-Charcoal.Factory.MapFactory.html#76-84" title="Go to source code">map</a>( )</code>
-
-		<div class="description short">
-			<p>Get the map of all types in <code>[$type =&gt; $class]</code> format.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Get the map of all types in <code>[$type =&gt; $class]</code> format.</p>
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					array
-				</div>
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="resolve" id="_resolve">
-
-		<td class="attributes"><code>
-			 public 
-
-			string
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_resolve">#</a>
-		<code><a href="source-class-Charcoal.Factory.MapFactory.html#86-111" title="Go to source code">resolve</a>( <span>string <var>$type</var></span> )</code>
-
-		<div class="description short">
-			<p>The "Map Factory" implements <code>AbstractFactory</code>'s <code>resolve()</code> abstract method
-by fetching the class ident from the <code>map</code> member array.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>The "Map Factory" implements <code>AbstractFactory</code>'s <code>resolve()</code> abstract method
-by fetching the class ident from the <code>map</code> member array.</p>
-
-<p>If the object's <code>type</code> is not defined in the class map, an exception will be thrown.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>The "type" of object to resolve (the object ident).</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					string<br>The resolved class name (FQN).
-				</div>
-
-				<h4>Throws</h4>
-				<div class="list">
-					InvalidArgumentException<br>If the type parameter is not a string.
-				</div>
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="isResolvable" id="_isResolvable">
-
-		<td class="attributes"><code>
-			 public 
-
-			boolean
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_isResolvable">#</a>
-		<code><a href="source-class-Charcoal.Factory.MapFactory.html#113-136" title="Go to source code">isResolvable</a>( <span>string <var>$type</var></span> )</code>
-
-		<div class="description short">
-			<p>The "Map Factory" implements <code>AbstractFactory</code>'s <code>is_resolvable()</code> abstract method
-by ensuring the class ident is defined in the class map and is a validd class.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>The "Map Factory" implements <code>AbstractFactory</code>'s <code>is_resolvable()</code> abstract method
-by ensuring the class ident is defined in the class map and is a validd class.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$type</var></dt>
-					<dd>The "type" of object to resolve (the object ident).</dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					boolean
-				</div>
-
-				<h4>Throws</h4>
-				<div class="list">
-					InvalidArgumentException<br>If the type parameter is not a string.
-				</div>
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	</table>
 
 	<table class="summary inherited">
 	<caption>Methods inherited from <a href="class-Charcoal.Factory.AbstractFactory.html#methods">Charcoal\Factory\AbstractFactory</a></caption>
 	<tr>
 		<td><code>
+			<a href="class-Charcoal.Factory.AbstractFactory.html#___construct">__construct()</a>, 
+			<a href="class-Charcoal.Factory.AbstractFactory.html#_addClassToMap">addClassToMap()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_arguments">arguments()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_baseClass">baseClass()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_callback">callback()</a>, 
@@ -390,6 +143,10 @@ by ensuring the class ident is defined in the class map and is a validd class.</
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_createClass">createClass()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_defaultClass">defaultClass()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_get">get()</a>, 
+			<a href="class-Charcoal.Factory.AbstractFactory.html#_isResolvable">isResolvable()</a>, 
+			<a href="class-Charcoal.Factory.AbstractFactory.html#_map">map()</a>, 
+			<a href="class-Charcoal.Factory.AbstractFactory.html#_resolve">resolve()</a>, 
+			<a href="class-Charcoal.Factory.AbstractFactory.html#_resolver">resolver()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_setArguments">setArguments()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_setBaseClass">setBaseClass()</a>, 
 			<a href="class-Charcoal.Factory.AbstractFactory.html#_setCallback">setCallback()</a>, 
