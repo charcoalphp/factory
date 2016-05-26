@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Charcoal\Factory\AbstractFactory</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-Charcoal.html">
+						Charcoal<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-Charcoal.Factory.html">
+						Factory					</a>
+
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-Charcoal.Factory.AbstractFactory.html">AbstractFactory</a></li>
+				<li><a href="class-Charcoal.Factory.GenericFactory.html">GenericFactory</a></li>
+				<li><a href="class-Charcoal.Factory.GenericResolver.html">GenericResolver</a></li>
+				<li><a href="class-Charcoal.Factory.MapFactory.html">MapFactory</a></li>
+				<li><a href="class-Charcoal.Factory.ResolverFactory.html">ResolverFactory</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-Charcoal.Factory.FactoryInterface.html">FactoryInterface</a></li>
+			</ul>
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-Charcoal.Factory.html" title="Summary of Charcoal\Factory"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class AbstractFactory</h1>
+
+
+	<div class="description">
+	<p>Full implementation, as Abstract class, of the FactoryInterface.</p>
+
+<h2>Class dependencies:</h2>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Type</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>base_class</code></td>
+  <td><em>string</em></td>
+  <td>Optional. A base class (or interface) to ensure a type of object.</td>
+</tr>
+<tr>
+  <td><code>default_class</code></td>
+  <td><em>string</em></td>
+  <td>Optional. A default class, as fallback when the requested object is not resolvable.</td>
+</tr>
+<tr>
+  <td><code>arguments</code></td>
+  <td><em>array</em></td>
+  <td>Optional. Constructor arguments that will be passed along to created instances.</td>
+</tr>
+<tr>
+  <td><code>callback</code></td>
+  <td><em>Callable</em></td>
+  <td>Optional. A callback function that will be called upon object creation.</td>
+</tr>
+<tr>
+  <td><code>resolver</code></td>
+  <td><em>Callable</em></td>
+  <td>Optional. A class resolver. If none is provided, a default will be used.</td>
+</tr>
+<tr>
+  <td><code>resolver_options</code></td>
+  <td><em>array</em></td>
+  <td>Optional. Resolver options (prefix, suffix, capitals and replacements). This is ignored / unused if <code>resolver</code> is provided.</td>
+</tr>
+</tbody>
+</table>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+<b><span>Charcoal\Factory\AbstractFactory</span></b>			
+			 implements 
+				<a href="class-Charcoal.Factory.FactoryInterface.html"><span>Charcoal\Factory\FactoryInterface</span></a>
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-Charcoal.Factory.GenericFactory.html">Charcoal\Factory\GenericFactory</a>, 
+			<a href="class-Charcoal.Factory.MapFactory.html">Charcoal\Factory\MapFactory</a>, 
+			<a href="class-Charcoal.Factory.ResolverFactory.html">Charcoal\Factory\ResolverFactory</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br>
+		
+		<b>Namespace:</b> <a href="namespace-Charcoal.html">Charcoal</a>\<a href="namespace-Charcoal.Factory.html">Factory</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-Charcoal.Factory.AbstractFactory.html#13-489" title="Go to source code">Charcoal/Factory/AbstractFactory.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#74-101" title="Go to source code">__construct</a>( <span>array <var>$data</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$data</var></dt>
+					<dd>Constructor dependencies.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="create" id="_create">
+
+		<td class="attributes"><code>
+			final public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_create">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#103-187" title="Go to source code">create</a>( <span>string <var>$type</var></span>, <span>array <var>$args</var> = <span class="php-keyword1">null</span></span>, <span>callable <var>$cb</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			<p>Create a new instance of a class, by type.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Create a new instance of a class, by type.</p>
+
+<p>Unlike <code>get()</code>, this method <em>always</em> return a new instance of the requested class.</p>
+
+<h2>Object callback</h2>
+
+<p>It is possible to pass a callback method that will be executed upon object instanciation.
+The callable should have a signature: <code>function($obj);</code> where $obj is the newly created object.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>The type (class ident).</dd>
+					<dt><var>$args</var></dt>
+					<dd>Optional. Constructor arguments (will override the arguments set on the class from constructor).</dd>
+					<dt><var>$cb</var></dt>
+					<dd>Optional. Object callback, called at creation. Leave blank to use <code>$callback</code> member.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>The instance / object
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					Exception<br>If the base class is set and  the resulting instance is not of the base class.<br>
+					InvalidArgumentException<br>If type argument is not a string or is not an available type.
+				</div>
+
+
+
+				<h4>Implementation of</h4>
+				<div class="list"><code><a href="class-Charcoal.Factory.FactoryInterface.html#_create">Charcoal\Factory\FactoryInterface::create()</a></code></div>
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="createClass" id="_createClass">
+
+		<td class="attributes"><code>
+			 protected 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_createClass">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#189-218" title="Go to source code">createClass</a>( <span>string <var>$classname</var></span>, <span>mixed <var>$args</var></span> )</code>
+
+		<div class="description short">
+			<p>Create a class instance with given arguments.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Create a class instance with given arguments.</p>
+
+<p>How the constructor arguments are passed depends on its type:</p>
+
+<ul>
+<li>if null, no arguments are passed at all.</li>
+<li>if it's not an array, it's passed as a single argument.</li>
+<li>if it's an associative array, it's passed as a sing argument.</li>
+<li>if it's a sequential (numeric keys) array, it's</li>
+</ul>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$classname</var></dt>
+					<dd>The FQN of the class to instanciate.</dd>
+					<dt><var>$args</var></dt>
+					<dd>The constructor arguments.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>The created object.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="get" id="_get">
+
+		<td class="attributes"><code>
+			final public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_get">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#220-242" title="Go to source code">get</a>( <span>string <var>$type</var></span>, <span>array <var>$args</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			<p>Get (load or create) an instance of a class, by type.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get (load or create) an instance of a class, by type.</p>
+
+<p>Unlike <code>create()</code> (which always call a <code>new</code> instance), this function first tries to load / reuse
+an already created object of this type, from memory.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>The type (class ident).</dd>
+					<dt><var>$args</var></dt>
+					<dd>The constructor arguments (optional).</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>The instance / object
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>If type argument is not a string.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resolver" id="_resolver">
+
+		<td class="attributes"><code>
+			 protected 
+
+			callable
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resolver">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#254-260" title="Go to source code">resolver</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					callable
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="map" id="_map">
+
+		<td class="attributes"><code>
+			 protected 
+
+			string[]
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_map">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#278-286" title="Go to source code">map</a>( )</code>
+
+		<div class="description short">
+			<p>Get the map of all types in <code>[$type =&gt; $class]</code> format.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get the map of all types in <code>[$type =&gt; $class]</code> format.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string[]
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addClassToMap" id="_addClassToMap">
+
+		<td class="attributes"><code>
+			 protected 
+
+			<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addClassToMap">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#288-306" title="Go to source code">addClassToMap</a>( <span>string <var>$type</var></span>, <span>string <var>$className</var></span> )</code>
+
+		<div class="description short">
+			<p>Add a class name to the available types <em>map</em>.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Add a class name to the available types <em>map</em>.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>The type (class ident).</dd>
+					<dt><var>$className</var></dt>
+					<dd>The FQN of the class.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code><br>Chainable
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>If the $type parameter is not a striing or the $className class does not exist.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBaseClass" id="_setBaseClass">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBaseClass">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#308-341" title="Go to source code">setBaseClass</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			<p>If a base class is set, then it must be ensured that the created objects
+are <code>instanceof</code> this base class.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>If a base class is set, then it must be ensured that the created objects
+are <code>instanceof</code> this base class.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>The FQN of the class, or "type" of object, to set as base class.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code><br>Chainable
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>If the class is not a string or is not an existing class / interface.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="baseClass" id="_baseClass">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_baseClass">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#343-349" title="Go to source code">baseClass</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>The FQN of the base class
+				</div>
+
+
+
+
+				<h4>Implementation of</h4>
+				<div class="list"><code><a href="class-Charcoal.Factory.FactoryInterface.html#_baseClass">Charcoal\Factory\FactoryInterface::baseClass()</a></code></div>
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDefaultClass" id="_setDefaultClass">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDefaultClass">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#351-382" title="Go to source code">setDefaultClass</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			<p>If a default class is set, then calling <code>get()</code> or <code>create()</code> an invalid type
+should return an object of this class instead of throwing an error.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>If a default class is set, then calling <code>get()</code> or <code>create()</code> an invalid type
+should return an object of this class instead of throwing an error.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>The FQN of the class, or "type" of object, to set as default class.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code><br>Chainable
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>If the class name is not a string or not a valid class.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="defaultClass" id="_defaultClass">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_defaultClass">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#384-390" title="Go to source code">defaultClass</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>The FQN of the default class
+				</div>
+
+
+
+
+				<h4>Implementation of</h4>
+				<div class="list"><code><a href="class-Charcoal.Factory.FactoryInterface.html#_defaultClass">Charcoal\Factory\FactoryInterface::defaultClass()</a></code></div>
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setArguments" id="_setArguments">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setArguments">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#392-400" title="Go to source code">setArguments</a>( <span>array <var>$arguments</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$arguments</var></dt>
+					<dd>The constructor arguments to be passed to the created object's initialization.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code><br>Chainable
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="arguments" id="_arguments">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_arguments">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#402-408" title="Go to source code">arguments</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+				<h4>Implementation of</h4>
+				<div class="list"><code><a href="class-Charcoal.Factory.FactoryInterface.html#_arguments">Charcoal\Factory\FactoryInterface::arguments()</a></code></div>
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setCallback" id="_setCallback">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setCallback">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#410-418" title="Go to source code">setCallback</a>( <span>callable <var>$callback</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$callback</var></dt>
+					<dd>The object callback.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-Charcoal.Factory.FactoryInterface.html">Charcoal\Factory\FactoryInterface</a></code><br>Chainable
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="callback" id="_callback">
+
+		<td class="attributes"><code>
+			 public 
+
+			callable|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_callback">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#420-426" title="Go to source code">callback</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					callable|null
+				</div>
+
+
+
+
+				<h4>Implementation of</h4>
+				<div class="list"><code><a href="class-Charcoal.Factory.FactoryInterface.html#_callback">Charcoal\Factory\FactoryInterface::callback()</a></code></div>
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resolve" id="_resolve">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resolve">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#428-455" title="Go to source code">resolve</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			<p>The Generic factory resolves the class name from an exact FQN.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>The Generic factory resolves the class name from an exact FQN.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>The "type" of object to resolve (the object ident).</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>The resolved class name (FQN).
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>If the type parameter is not a string.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isResolvable" id="_isResolvable">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isResolvable">#</a>
+		<code><a href="source-class-Charcoal.Factory.AbstractFactory.html#457-488" title="Go to source code">isResolvable</a>( <span>string <var>$type</var></span> )</code>
+
+		<div class="description short">
+			<p>Wether a <code>type</code> is resolvable. The Generic Factory simply checks if the <em>FQN</em> <code>type</code> class exists.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Wether a <code>type</code> is resolvable. The Generic Factory simply checks if the <em>FQN</em> <code>type</code> class exists.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>The "type" of object to resolve (the object ident).</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>If the type parameter is not a string.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="resolved" id="$resolved">
+		<td class="attributes"><code>
+			protected static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Charcoal.Factory.AbstractFactory.html#30-33" title="Go to source code"><var>$resolved</var></a>
+
+			<div class="description short">
+				<p>$resolved</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>$resolved</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$resolved" class="anchor">#</a>
+				<code>[]</code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
