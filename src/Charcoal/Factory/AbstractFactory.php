@@ -2,13 +2,11 @@
 
 namespace Charcoal\Factory;
 
-// Dependencies from `PHP`
-use \Exception;
-use \InvalidArgumentException;
-
-// Local namespace dependencies
-use \Charcoal\Factory\FactoryInterface;
-use \Charcoal\Factory\GenericResolver;
+// From 'charcoal-factory'
+use Charcoal\Factory\Exception\InvalidArgumentException;
+use Charcoal\Factory\Exception\InvalidClassException;
+use Charcoal\Factory\FactoryInterface;
+use Charcoal\Factory\GenericResolver;
 
 /**
  * Full implementation, as Abstract class, of the FactoryInterface.
@@ -28,50 +26,75 @@ use \Charcoal\Factory\GenericResolver;
 abstract class AbstractFactory implements FactoryInterface
 {
     /**
-     * @var array $resolved
-     */
-    protected $resolved = [];
-
-    /**
-     * If a base class is set, then it must be ensured that the
-     * @var string $baseClass
-     */
-    private $baseClass = '';
-    /**
+     * The base class name or interface.
      *
-     * @var string $defaultClass
+     * If a base class is defined, the requested class must be of this class,
+     * have this class as one of its parents, or implement it.
+     *
+     * @var string|null
      */
-    private $defaultClass = '';
+    private $baseClass;
 
     /**
-     * @var array $arguments
+     * The fallback class name.
+     *
+     * If a default class is defined, the fallback is instantiated instead of throwing an error.
+     *
+     * @var string|null
+     */
+    private $defaultClass;
+
+    /**
+     * The default parameters to be passed to the class constructor.
+     *
+     * Note: These parameters can be overriden with the `create()` and `get()` methods.
+     *
+     * @var array|null
      */
     private $arguments;
 
     /**
-     * @var callable $callback
+     * The default routine to call for every new class instance.
+     *
+     * Note: Used with the `create()` method only.
+     *
+     * @var callable|null
      */
     private $callback;
 
     /**
-     * Keeps loaded instances in memory, in `[$type => $instance]` format.
-     * Used with the `get()` method only.
-     * @var array $instances
-     */
-    private $instances = [];
-
-    /**
-     * @var Callable $resolver
+     * The identifier to class name resolver.
+     *
+     * @var callable
      */
     private $resolver;
 
     /**
-     * The class map array holds available types, in `[$type => $className]` format.
-     * @var string[] $map
+     * A pool of resolved identifiers to class names (`[ $type => $className ]`).
+     *
+     * @var string[]
+     */
+    protected $resolved = [];
+
+    /**
+     * A pool of resolved identifiers to class instances (`[ $type => $instance ]`).
+     *
+     * Note: Used with the `get()` method only.
+     *
+     * @var object[]
+     */
+    private $instances = [];
+
+    /**
+     * A map of aliases; identifiers to class names (`[ $type => $className ]`).
+     *
+     * @var string[]
      */
     private $map = [];
 
     /**
+     * Create a new factory.
+     *
      * @param array $data Constructor dependencies.
      */
     public function __construct(array $data = null)
@@ -110,25 +133,35 @@ abstract class AbstractFactory implements FactoryInterface
      * Unlike `get()`, this method *always* return a new instance of the requested class.
      *
      * ## Object callback
+     *
      * It is possible to pass a callback method that will be executed upon object instanciation.
      * The callable should have a signature: `function($obj);` where $obj is the newly created object.
      *
-     * @param string   $type The type (class ident).
-     * @param array    $args Optional. Constructor arguments (will override the arguments set on the class from constructor).
-     * @param callable $cb   Optional. Object callback, called at creation. Will run in addition to the default callback, if any.
+     * @param  string   $type The type (class ident).
+     * @param  array    $args Optional. Constructor arguments (will override the arguments set on the class from constructor).
+     * @param  callable $cb   Optional. Object callback, called at creation. Will run in addition to the default callback, if any.
      * @throws Exception If the base class is set and  the resulting instance is not of the base class.
      * @throws InvalidArgumentException If type argument is not a string or is not an available type.
      * @return mixed The instance / object
+     *
+     *
+     *
+     * @param  string   $type     Object type or class name to create.
+     * @param  array    $args     Optional. Parameters to be passed to the class constructor.
+     *     If specified, overrides the {@see self::$arguments} initially assigned to the factory.
+     * @param  callable $callback Optional. Callback that will be called and passed the new class instance.
+     *     If specified, overrides the {@see self::$callback} initially assigned to the factory.
+     * @throws InvalidArgumentException If $type is not a string or is not an available type.
+     * @return mixed A new instance of $type.
      */
     final public function create($type, array $args = null, callable $cb = null)
     {
         if (!is_string($type)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    '%s: Type must be a string.',
-                    get_called_class()
-                )
-            );
+            throw new InvalidArgumentException(sprintf(
+                '[%1$s] Type must be a string, received "%2$s"',
+                get_called_class(),
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
         }
 
         if (!isset($args)) {
@@ -137,7 +170,7 @@ abstract class AbstractFactory implements FactoryInterface
 
         $pool = get_called_class();
         if (isset($this->resolved[$pool][$type])) {
-            $classname = $this->resolved[$pool][$type];
+            $className = $this->resolved[$pool][$type];
         } else {
             if ($this->isResolvable($type) === false) {
                 $defaultClass = $this->defaultClass();
@@ -146,35 +179,31 @@ abstract class AbstractFactory implements FactoryInterface
                     $this->runCallbacks($obj, $cb);
                     return $obj;
                 } else {
-                    throw new InvalidArgumentException(
-                        sprintf(
-                            '%1$s: Type "%2$s" is not a valid type. (Using default class "%3$s")',
-                            get_called_class(),
-                            $type,
-                            $defaultClass
-                        )
-                    );
+                    throw new InvalidArgumentException(sprintf(
+                        '[%1$s] Type "%2$s" is not a valid type. (Using default class "%3$s")',
+                        get_called_class(),
+                        $type,
+                        $defaultClass
+                    ));
                 }
             }
 
             // Create the object from the type's class name.
-            $classname = $this->resolve($type);
-            $this->resolved[$pool][$type] = $classname;
+            $className = $this->resolve($type);
+            $this->resolved[$pool][$type] = $className;
         }
 
-        $obj = $this->createClass($classname, $args);
+        $obj = $this->createClass($className, $args);
 
         // Ensure base class is respected, if set.
         $baseClass = $this->baseClass();
         if ($baseClass !== '' && !($obj instanceof $baseClass)) {
-            throw new Exception(
-                sprintf(
-                    '%1$s: Class "%2$s" must be an instance of "%3$s"',
-                    get_called_class(),
-                    $classname,
-                    $baseClass
-                )
-            );
+            throw new Exception(sprintf(
+                '[%1$s] Class "%2$s" must be an instance of "%3$s"',
+                get_called_class(),
+                $className,
+                $baseClass
+            ));
         }
 
         $this->runCallbacks($obj, $cb);
@@ -210,23 +239,23 @@ abstract class AbstractFactory implements FactoryInterface
      * - if it's an associative array, it's passed as a sing argument.
      * - if it's a sequential (numeric keys) array, it's
      *
-     * @param string $classname The FQN of the class to instanciate.
-     * @param mixed  $args      The constructor arguments.
-     * @return mixed The created object.
+     * @param  string $className The fully-qualified class name to instantiate.
+     * @param  mixed  $args      Optional. Parameters to be passed to the class constructor.
+     * @return object A new instance of $className.
      */
-    protected function createClass($classname, $args)
+    protected function createClass($className, $args = null)
     {
         if ($args === null) {
-            return new $classname;
+            return new $className;
         }
         if (!is_array($args)) {
-            return new $classname($args);
+            return new $className($args);
         }
         if (count(array_filter(array_keys($args), 'is_string')) > 0) {
-            return new $classname($args);
+            return new $className($args);
         } else {
-            // Use argument unpacking (`return new $classname(...$args);`) when minimum PHP requirement is bumped to 5.6.
-            $reflection = new \ReflectionClass($classname);
+            // Use argument unpacking (`return new $className(...$args);`) when minimum PHP requirement is bumped to 5.6.
+            $reflection = new \ReflectionClass($className);
             return $reflection->newInstanceArgs($args);
         }
     }
@@ -276,7 +305,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * Add multiple types, in a an array of `type` => `className`.
      *
-     * @param string[] $map The map (key=>classname) to use.
+     * @param string[] $map The map (key=>className) to use.
      * @return FactoryInterface Chainable
      */
     private function setMap(array $map)
@@ -320,42 +349,46 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * If a base class is set, then it must be ensured that the created objects
-     * are `instanceof` this base class.
+     * Attach a base class or interface to the factory.
      *
-     * @param string $type The FQN of the class, or "type" of object, to set as base class.
+     * If a base class is defined, the requested class(es) must be of this class,
+     * have this class as one of its parents, or implement it.
+     *
+     * @param  string $type Object type, class name, or interface to set as the base class.
+     *
+     *
+     *
+     * @param  string $type The FQN of the class, or "type" of object, to set as base class.
      * @throws InvalidArgumentException If the class is not a string or is not an existing class / interface.
      * @return FactoryInterface Chainable
      */
     public function setBaseClass($type)
     {
-        if (!is_string($type) || empty($type)) {
-            throw new InvalidArgumentException(
-                'Class name or type must be a non-empty string.'
-            );
-        }
+        $this->assertValidClassName($type);
 
-        $exists = (class_exists($type) || interface_exists($type));
-        if ($exists) {
-            $classname = $type;
+        $classExists = (class_exists($type) || interface_exists($type));
+        if ($classExists) {
+            $className = $type;
         } else {
-            $classname = $this->resolve($type);
-
-            $exists = (class_exists($classname) || interface_exists($classname));
-            if (!$exists) {
-                throw new InvalidArgumentException(
-                    sprintf('Can not set "%s" as base class: Invalid class or interface name.', $classname)
-                );
+            $className   = $this->resolve($type);
+            $classExists = (class_exists($className) || interface_exists($className));
+            if (!$classExists) {
+                throw new InvalidArgumentException(sprintf(
+                    'Invalid base class: Class or interface "%s" not found',
+                    $className
+                ));
             }
         }
 
-        $this->baseClass = $classname;
+        $this->baseClass = $className;
 
         return $this;
     }
 
     /**
-     * @return string The FQN of the base class
+     * Retrieve the base class name or interface, if any.
+     *
+     * @return string|null The FQN of the base class, NULL otherwise.
      */
     public function baseClass()
     {
@@ -366,31 +399,27 @@ abstract class AbstractFactory implements FactoryInterface
      * If a default class is set, then calling `get()` or `create()` an invalid type
      * should return an object of this class instead of throwing an error.
      *
-     * @param string $type The FQN of the class, or "type" of object, to set as default class.
-     * @throws InvalidArgumentException If the class name is not a string or not a valid class.
+     * @param  string $type The FQN of the class (or its snake-case variant).
+     * @throws InvalidArgumentException If the default class is invalid or not found.
      * @return FactoryInterface Chainable
      */
     public function setDefaultClass($type)
     {
-        if (!is_string($type) || empty($type)) {
-            throw new InvalidArgumentException(
-                'Class name or type must be a non-empty string.'
-            );
-        }
+        $this->assertValidClassName($type);
 
         if (class_exists($type)) {
-            $classname = $type;
+            $className = $type;
         } else {
-            $classname = $this->resolve($type);
-
-            if (!class_exists($classname)) {
-                throw new InvalidArgumentException(
-                    sprintf('Can not set "%s" as defaut class: Invalid class name.', $classname)
-                );
+            $className = $this->resolve($type);
+            if (!class_exists($className)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Invalid default class: Class "%s" not found',
+                    $className
+                ));
             }
         }
 
-        $this->defaultClass = $classname;
+        $this->defaultClass = $className;
 
         return $this;
     }
@@ -442,17 +471,12 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * The Generic factory resolves the class name from an exact FQN.
      *
-     * @param string $type The "type" of object to resolve (the object ident).
-     * @throws InvalidArgumentException If the type parameter is not a string.
+     * @param  string $type The class (in its snake-case variant) to resolve.
      * @return string The resolved class name (FQN).
      */
     public function resolve($type)
     {
-        if (!is_string($type)) {
-            throw new InvalidArgumentException(
-                'Can not resolve class ident: type must be a string'
-            );
-        }
+        $this->assertValidObjectType($type);
 
         $map = $this->map();
         if (isset($map[$type])) {
@@ -471,17 +495,12 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * Wether a `type` is resolvable. The Generic Factory simply checks if the _FQN_ `type` class exists.
      *
-     * @param string $type The "type" of object to resolve (the object ident).
-     * @throws InvalidArgumentException If the type parameter is not a string.
+     * @param  string $type The class (in its snake-case variant) to resolve.
      * @return boolean
      */
     public function isResolvable($type)
     {
-        if (!is_string($type)) {
-            throw new InvalidArgumentException(
-                'Can not check resolvable: type must be a string'
-            );
-        }
+        $this->assertValidObjectType($type);
 
         $map = $this->map();
         if (isset($map[$type])) {
@@ -499,5 +518,39 @@ abstract class AbstractFactory implements FactoryInterface
         }
 
         return false;
+    }
+
+    /**
+     * Asserts that the object type is valid, throws an Exception if not.
+     *
+     * @param  string $type The name of the class (and namespace) to test.
+     *    Either as a FQN or as snake-case.
+     * @throws LogicException If the class is invalid.
+     */
+    protected function assertValidObjectType($type)
+    {
+        if (!is_string($type) || empty($type)) {
+            throw new LogicException(sprintf(
+                'Object type must be a non-empty string, received "%s"',
+                is_object($type) ? get_class($type) : gettype($type)
+            ));
+        }
+    }
+
+    /**
+     * Asserts that the class name is valid, throws an Exception if not.
+     *
+     * @param  string $type The name of the class (and namespace) to test.
+     *    Either as a FQN or as snake-case.
+     * @throws LogicException If the class is invalid.
+     */
+    protected function assertValidClassName($className)
+    {
+        if (!is_string($className) || empty($className)) {
+            throw new LogicException(sprintf(
+                'Class name must be a non-empty string, received "%s"',
+                is_object($className) ? get_class($className) : gettype($className)
+            ));
+        }
     }
 }
